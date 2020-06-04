@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Ski</title>
+  <link rel="stylesheet" type="text/css" href="bundle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+ 
+</head>
+
+<style>
+
+table {
+  border-collapse: collapse;
+  width: 98%;
+}
+
+table, th, td {
+  border: 1px solid black;
+  margin-top: 1em;
+  margin-left: 1em;
+  padding: 5px;
+}
+
+th{
+  background-color: #0072cc;
+  color: white;
+}
+
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 3em;
+  min-width: 2em;
+  max-width: 2em;
+  word-break: break-all;
+}
+
+tr:nth-of-type(odd) {
+  background-color:white;
+}
+
+tr:nth-child(even) {
+  background-color: lightsteelblue;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+</style>
+
+<body>
+
+  <div id="app">
+
+    <h1 style="margin-left: 15px;">Ski Shop</h1>
+    <button v-on:click="getAllSkis" class="btn btn-outline-info" style="margin-left: 1em;" >Get all Ski</button>
+    
+    <table>
+      <thead>
+        <tr v-if="skis.length">
+          <th scope="col">ID</th>
+          <th scope="col">Ski Length</th>
+          <th scope="col">Ski Type</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody id="SkiList">
+        <tr v-for="ski in skis">
+          <td>{{ ski.id }}</td>
+          <td>{{ ski.skiLength }}</td>
+          <td>{{ ski.skiType }}</td>
+          <td>{{ ski.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-left: 15px; margin-top: 1em;" id="Search" >Search</h3>
+    <input style="margin-left: 1em;" type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for something..." title="Come on, type something!!"/>
+
+    <div id="AddDiv">
+      <h3 style="margin-left: 15px; margin-top: 1em; color: black;">Add Ski</h3>
+      <input v-model.number="formData.id" style="margin-left: 1em;" id="addId" placeholder="Id" type="number" />
+      <input v-model.number="formData.skiLength" id="addSkiLength" placeholder="Ski Length" type="number" />
+      <input v-model="formData.skiType" id="addSkiType" placeholder="Ski Type" type="text"  />
+      <input v-model.number="formData.price" id="addPrice" placeholder="Price" type="number"  />
+      <button id="addButton" v-on:click="addSki()" >Add Ski</button>
+      <div>{{ addMessage }}</div>
+    </div>
+
+    
+ 
+  </div>
+  <script src="bundle.js"></script>
+
+  <script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("SkiList");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+    </script>
+</body>
+</html>
