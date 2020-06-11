@@ -59,7 +59,7 @@ tr:hover {
   <div id="app">
 
     <h1 style="margin-left: 15px;">Ski Shop</h1>
-    <button v-on:click="getAllSkis" class="btn btn-outline-info" style="margin-left: 1em;" >Get all Ski</button>
+    <button v-on:click="getAllSkis" class="btn btn-outline-info" id="GetAllSkisButton" style="margin-left: 1em;" >Get all Ski</button>
     
     <table>
       <thead>
@@ -71,10 +71,10 @@ tr:hover {
         </tr>
       </thead>
       <tbody id="SkiList">
-        <tr v-for="ski in skis">
+        <tr v-for="ski in skis" id="SkiListRow" >
           <td>{{ ski.id }}</td>
           <td>{{ ski.skiLength }}</td>
-          <td>{{ ski.skiType }}</td>
+          <td id="CheckSkiType" >{{ ski.skiType }}</td>
           <td>{{ ski.price }}</td>
         </tr>
       </tbody>
@@ -90,13 +90,33 @@ tr:hover {
       <input v-model="formData.skiType" id="addSkiType" placeholder="Ski Type" type="text"  />
       <input v-model.number="formData.price" id="addPrice" placeholder="Price" type="number"  />
       <button id="addButton" v-on:click="addSki()" >Add Ski</button>
-      <div>{{ addMessage }}</div>
+      <div id="addMessage" style="margin-left: 1em;" >{{ addMessage }}</div>
     </div>
 
-    
- 
+    <div id="PutDiv">
+      <h3 style="margin-left: 15px; margin-top: 1em; color: black;">Edit Ski</h3>
+      <input v-model.number="updateData.id" placeholder="Id" type="number" style="margin-left: 1em;" />
+      <input v-model.number="updateData.skiLength" placeholder="Ski Length" type="number" />
+      <input v-model="updateData.skiType" placeholder="Ski Type" type="text" />
+      <input v-model.number="updateData.price" placeholder="Price" type="number" />
+      <button v-on:click="updateSki()">Update Ski</button>
+      <div style="margin-left: 1em;">{{ updateMessage }}</div>
+    </div>
+
+  <div id="DeleteDiv">
+    <h3 style="margin-left: 15px; margin-top: 1em; color: black;">Delete Ski</h3>
+    <input v-model.number="deleteId" placeholder="id" type="number" style="margin-left: 1em;" />
+    <button v-on:click="deleteSki(deleteId)">Delete</button>
+    <div style="margin-left: 1em;"> {{deleteMessage}} </div>
+
   </div>
-  <script src="bundle.js"></script>
+    
+
+
+
+  </div>
+
+
 
   <script>
     function searchTable() {
@@ -121,5 +141,7 @@ tr:hover {
         }
     }
     </script>
+  <script src="bundle.js"></script>
+
 </body>
 </html>

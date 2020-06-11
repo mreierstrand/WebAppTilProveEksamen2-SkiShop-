@@ -2069,7 +2069,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/axios/index */ "./node_modules/axios/index.js");
 /* harmony import */ var _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0__);
 
-var baseUrl = "https://skishopoliver.azurewebsites.net/api/Ski";
+var baseUrl = "https://skishopserviceeksamen.azurewebsites.net/api/Ski";
 new Vue({
     el: "#app",
     data: {
@@ -2082,7 +2082,16 @@ new Vue({
             skiType: "",
             price: 0
         },
+        updateData: {
+            id: 0,
+            skiLength: 0,
+            skiType: "",
+            price: 0
+        },
         addMessage: "",
+        deleteMessage: "",
+        deleteId: 0,
+        updateMessage: ""
     },
     methods: {
         getAllSkis: function () {
@@ -2111,6 +2120,33 @@ new Vue({
                 .then(function (response) {
                 var message = "response " + response.status + " " + response.statusText;
                 _this.addMessage = message;
+                _this.getAllSkis();
+            })
+                .catch(function (error) {
+                // this.addMessage = error.message
+                alert(error.message);
+            });
+        },
+        deleteSki: function (deleteId) {
+            var _this = this;
+            var uri = baseUrl + "/" + deleteId;
+            _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.delete(uri)
+                .then(function (response) {
+                _this.deleteMessage = response.status + " " + response.statusText;
+                _this.getAllSkis();
+            })
+                .catch(function (error) {
+                //this.deleteMessage = error.message
+                alert(error.message);
+            });
+        },
+        updateSki: function () {
+            var _this = this;
+            var uri = baseUrl + "/" + this.updateData.id;
+            _node_modules_axios_index__WEBPACK_IMPORTED_MODULE_0___default.a.put(uri, this.updateData)
+                .then(function (response) {
+                var message = "response " + response.status + " " + response.statusText;
+                _this.updateMessage = message;
                 _this.getAllSkis();
             })
                 .catch(function (error) {
